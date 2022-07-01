@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace FaizApi.Controllers
@@ -12,28 +8,27 @@ namespace FaizApi.Controllers
     [ApiController]
     public class FaizController : ControllerBase
     {
-        private double AylikFaizOrani = 0.01;
+        private double _aylikFaizOrani = 0.01;
         
-        // GET: api/Faiz
         [HttpGet]
         [Route("FaizMiktar")]
-        public IEnumerable<double> GetAmounts([FromQuery] int AnaPara, int Vade)
+        public IEnumerable<double> GetAmounts([FromQuery] int anaPara, int Vade)
         {
-            double FaizTutari = AnaPara * AylikFaizOrani * Vade;
-            double ToplamOdenecekTutar = AnaPara + FaizTutari;
-            return new Double[] { ToplamOdenecekTutar, FaizTutari };
+            double faizTutari = anaPara * _aylikFaizOrani * Vade;
+            double toplamOdenecekTutar = anaPara + faizTutari;
+            return new[] { toplamOdenecekTutar, faizTutari };
         }
 
         [HttpGet]
         [Route("OdemeListesi")]
-        public IEnumerable<double> GetList([FromQuery] int AnaPara, int Vade)
+        public IEnumerable<double> GetList([FromQuery] int anaPara, int vade)
         {
-            double FaizTutari = AnaPara * AylikFaizOrani * Vade;
-            double ToplamOdenecekTutar = AnaPara + FaizTutari;
-            Double [] list = new Double[Vade];
-            for (int i = 0; i < Vade; i++)
+            double faizTutari = anaPara * _aylikFaizOrani * vade;
+            double toplamOdenecekTutar = anaPara + faizTutari;
+            Double [] list = new Double[vade];
+            for (int i = 0; i < vade; i++)
             {
-                list[i] = ToplamOdenecekTutar / Vade;
+                list[i] = toplamOdenecekTutar / vade;
             }
             return list;
         }
